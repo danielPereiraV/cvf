@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Post(
                 autor: "Matheus",
-                legenda: "Alcool o gasolina patrão? kkkkk #caoFrentista",
+                legenda: "Alcool ou gasolina patrão? kkkkk #caoFrentista",
                 imagem: "https://pbs.twimg.com/media/C4ZKOwGWEAA5-NN.jpg",
               ),
               Post(
