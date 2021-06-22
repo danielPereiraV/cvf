@@ -70,6 +70,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 imagem:
                     "https://www.vetquality.com.br/wp-content/uploads/2020/09/escola-para-cachorro.jpg",
               ),
+              Post(
+                autor: "Gabriel",
+                legenda:
+                    "!Cão Perdido! Nome: Sansão , Local: Praça da Sé, contato: 43 9999999 ",
+                imagem:
+                    "https://photos.enjoei.com.br/roupa-tubarao-gg-45964868/1200xN/czM6Ly9waG90b3MuZW5qb2VpLmNvbS5ici9wcm9kdWN0cy8xNDY5MjU3Ni9jZTg0MWY1ZWM2NzVjMmMwMjhhNTExYmUzZWJiMGUxNy5qcGc",
+              ),
             ],
           ),
         ),
