@@ -2,6 +2,8 @@ import 'package:cvf/widgets/TelaDinamica/cao_perdido.dart';
 import 'package:cvf/widgets/TelaDinamica/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -11,6 +13,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var pets = [];
+  @override
+  initState() {
+    super.initState();
+    getpets();
+  }
+
+  Map fromJson(Map<String, dynamic> json) {
+    return {
+      'autor': json['autor'],
+      'legenda ': json['legenda'],
+      'imagem ': json['imagem']
+    };
+  }
+
+  void getpets() async {
+    var url =
+        Uri.parse('https://cvf-api-default-rtdb.firebaseio.com/pets.json');
+    var resposta = await http.get(url);
+
+    final Map<String, dynamic> objeto = json.decode(resposta.body);
+    var listapets = objeto['-Md-fFei_3Y63Lm9WFqf'];
+    debugPrint(listapets.runtimeType.toString());
+
+    var data = listapets.map((dynamic json) => fromJson(json)).toList();
+    debugPrint(data.runtimeType.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,36 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 imagem:
                     "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
               ),
-              Post(
-                autor: "Lele",
-                legenda: "Corridinha matinal",
-                imagem:
-                    "https://i.pinimg.com/236x/d5/b2/04/d5b204066572c122016a038db180fea4--funny-pets-golden-retriever.jpg",
-              ),
-              Post(
-                autor: "Matheus",
-                legenda: "Alcool ou gasolina patrão? kkkkk #caoFrentista",
-                imagem: "https://pbs.twimg.com/media/C4ZKOwGWEAA5-NN.jpg",
-              ),
-              Post(
-                autor: "Rafael",
-                legenda: "Mais que irmãos, 'brothers' ",
-                imagem:
-                    "https://vidasimples.co/wp-content/uploads/2019/08/Vida-simples-ter-um-cachorro-1160x523.jpg",
-              ),
-              Post(
-                autor: "Luis",
-                legenda: "Diga o por que devo te contratar?. #entrevista #Job",
-                imagem:
-                    "https://www.vetquality.com.br/wp-content/uploads/2020/09/escola-para-cachorro.jpg",
-              ),
-              Post(
-                autor: "Gabriel",
-                legenda:
-                    "!Cão Perdido! Nome: Sansão , Local: Praça da Sé, contato: 43 9999999 ",
-                imagem:
-                    "https://photos.enjoei.com.br/roupa-tubarao-gg-45964868/1200xN/czM6Ly9waG90b3MuZW5qb2VpLmNvbS5ici9wcm9kdWN0cy8xNDY5MjU3Ni9jZTg0MWY1ZWM2NzVjMmMwMjhhNTExYmUzZWJiMGUxNy5qcGc",
-              ),
+              ...this.pets.map((elemento) {
+                return Post(
+                  autor: elemento.autor,
+                  legenda: elemento.legenda,
+                  imagem: elemento.imagem,
+                );
+              })
             ],
           ),
         ),
